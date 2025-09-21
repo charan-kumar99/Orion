@@ -1,0 +1,16 @@
+2025-09-21 15:03:55,094 - Orion - WARNING - <module>:67 - OpenAI API key not configured
+2025-09-21 15:03:55,773 - Orion - INFO - adjust_for_noise:257 - Adjusting for ambient noise...
+2025-09-21 15:03:58,798 - Orion - INFO - adjust_for_noise:259 - Noise adjustment complete
+2025-09-21 15:03:58,833 - Orion - INFO - start:767 - Starting Orion Assistant
+2025-09-21 15:03:58,834 - Orion - INFO - speak:153 - Speaking: Good afternoon! I'm Orion, your voice assistant. S...
+2025-09-21 15:04:09,903 - Orion - INFO - listen:282 - Raw recognized command: 'hey war'
+2025-09-21 15:04:13,384 - Orion - INFO - listen:282 - Raw recognized command: 'hey everyone'
+2025-09-21 15:04:24,137 - Orion - INFO - listen:282 - Raw recognized command: 'ok or'
+2025-09-21 15:04:24,142 - Orion - INFO - _listen_for_wake_word:800 - Wake word detected
+2025-09-21 15:04:24,142 - Orion - INFO - speak:153 - Speaking: Yes?
+2025-09-21 15:04:30,997 - Orion - INFO - listen:282 - Raw recognized command: 'Orion'
+2025-09-21 15:04:31,003 - Orion - INFO - speak:153 - Speaking: This feature requires an API key. Try asking for t...
+2025-09-21 15:04:41,851 - Orion - INFO - listen:282 - Raw recognized command: 'exit'
+2025-09-21 15:04:46,869 - Orion - INFO - listen:282 - Raw recognized command: 'quit'
+2025-09-21 15:04:53,773 - Orion - WARNING - listen:287 - Speech not understood (attempt 1)
+2025-09-21 15:04:53,774 - Orion - INFO - speak:153 - Speaking: Sorry, I couldn't understand you. Please repeat.
