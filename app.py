@@ -7,12 +7,40 @@ import os
 import threading
 import time
 from datetime import datetime
+from dotenv import load_dotenv
 import config
 from client import get_ai_response
 import wikipedia
 import musiclibrary
 import re
 import io
+import google.generativeai as genai
+
+# Load environment variables
+load_dotenv()
+
+# Configure Google Generative AI
+google_api_key = os.getenv('GOOGLE_API_KEY')
+if google_api_key:
+    genai.configure(api_key=google_api_key)
+
+def get_gemini_response(query):
+    """Get AI response from Google Gemini"""
+    try:
+        if not google_api_key:
+            print("Gemini API: No API key configured")
+            return None
+        
+        print(f"Gemini API: Sending query: {query[:50]}...")
+        model = genai.GenerativeModel('gemini-2.5-flash')
+        response = model.generate_content(query)
+        print(f"Gemini API: Response received successfully")
+        return response.text
+    except Exception as e:
+        print(f"Gemini API Error: {type(e).__name__}: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return None
 
 app = Flask(__name__)
 CORS(app)
@@ -98,14 +126,15 @@ class VoiceAssistant:
         
         # AI or Wikipedia
         else:
-            # Try AI response first
-            if config.USE_OPENAI:
-                ai_response = get_ai_response(command)
+            # Try Google Gemini AI response first
+            if google_api_key:
+                ai_response = get_gemini_response(command)
                 if ai_response:
                     response = ai_response
                 else:
                     response = self._search_wikipedia(command)
             else:
+                # Fallback to Wikipedia if no API key
                 response = self._search_wikipedia(command)
         
         return response
@@ -148,7 +177,7 @@ def status():
     return jsonify({
         'status': 'online',
         'name': config.ASSISTANT_NAME,
-        'openai_enabled': config.USE_OPENAI,
+        'gemini_enabled': bool(google_api_key),
         'song_count': musiclibrary.get_song_count()
     })
 
@@ -227,7 +256,7 @@ if __name__ == '__main__':
     print(f"🚀 {config.ASSISTANT_NAME} Web Interface Starting...")
     print("="*50)
     print(f"🌐 Open your browser to: http://localhost:5000")
-    print(f"✅ OpenAI: {'Enabled' if config.USE_OPENAI else 'Disabled'}")
+    print(f"🤖 Google Gemini AI: {'Enabled ✅' if google_api_key else 'Disabled ❌'}")
     print(f"🎵 Songs available: {musiclibrary.get_song_count()}")
     print("="*50)
     

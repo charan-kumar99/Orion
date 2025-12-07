@@ -8,3 +8,4 @@ pyaudio==0.2.13
 requests==2.31.0
 Flask==3.0.0
 Flask-CORS==4.0.0
+google-generativeai==0.3.0

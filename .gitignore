@@ -1,47 +1,14 @@
-# Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environment
-venv/
-.venv/
-ENV/
-env/
-
-# Environment Variables
 .env
-
-# IDE
+.qodo/
 .vscode/
 .idea/
-*.swp
-*.swo
-.qodo/
-
-# OS
 .DS_Store
-Thumbs.db
-
-# Project Specific
-temp.mp3
-logs/
-cache/
+venv/
+env/
+.venv/
+build/
+dist/
+*.egg-info/
 *.log

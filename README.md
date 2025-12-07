@@ -10,7 +10,7 @@ Orion is an intelligent voice-activated personal assistant built with Python, si
 - 🌐 **Web Browsing**: Open popular websites (Google, YouTube, Facebook, LinkedIn)
 - 🎵 **Music Player**: Play songs from a curated library via YouTube
 - 📚 **Wikipedia Search**: Get information on any topic
-- 🤖 **AI Integration**: OpenAI-powered intelligent responses (optional)
+- 🤖 **AI Integration**: Google Gemini-powered intelligent responses (optional)
 - ⏰ **Time & Date**: Get current time and date information
 - 🧮 **Calculations**: Perform basic mathematical calculations
 
@@ -20,6 +20,8 @@ Orion is an intelligent voice-activated personal assistant built with Python, si
 - **Real-time Chat**: Interactive conversation display
 - **Quick Commands**: One-click access to common tasks
 - **Command History**: Track and reuse previous commands
+- **Interactive Animations**: Dynamic Orb with wave-text effects
+- **Letter Wave Status**: Staggered animation for status text
 - **Cross-Platform**: Works on any device with a browser
 
 ## 🚀 Getting Started
@@ -43,11 +45,9 @@ cd Orion
 pip install -r requirements.txt
 ```
 
-3. (Optional) Set up OpenAI API:
-   - Create a `.env` file in the project root
-   - Add your OpenAI API key:
+   - Add your Google API key:
    ```
-   OPENAI_API_KEY=your_api_key_here
+   GOOGLE_API_KEY=your_gemini_api_key_here
    ```
 
 ### Running Orion
@@ -135,7 +135,7 @@ This project is open source and available under the MIT License.
 
 - Google Speech Recognition API
 - Google Text-to-Speech (gTTS)
-- OpenAI API
+- Google Gemini API
 - Wikipedia API
 - Pygame for audio playback
 
