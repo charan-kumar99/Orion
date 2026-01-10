@@ -1,0 +1,10 @@
+SpeechRecognition==3.10.0
+gTTS==2.3.2
+pygame==2.5.2
+wikipedia==1.4.0
+python-dotenv==1.0.0
+pyaudio==0.2.13
+requests==2.31.0
+Flask==3.0.0
+Flask-CORS==4.0.0
+google-generativeai==0.3.0

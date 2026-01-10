@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ assistant_name }} - Voice Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Starfield Background -->
+    <div class="starfield" id="starfield"></div>
+
+    <!-- Main Container -->
+    <div class="orion-container">
+        <!-- Header with Logo and Time -->
+        <div class="header">
+            <div class="logo">
+                <div class="constellation">
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                </div>
+                <h1>ORION</h1>
+            </div>
+            <div class="datetime">
+                <div class="time" id="currentTime">10:09 AM</div>
+                <div class="date" id="currentDate">Wednesday, Oct 26</div>
+            </div>
+        </div>
+
+        <!-- Main Content Card -->
+        <div class="content-card">
+            <!-- Background Particles -->
+            <div class="particle-field" id="particleField"></div>
+
+            <!-- Response Area at Top -->
+            <div class="response-area">
+                <!-- User Input Display -->
+                <div class="user-input-display" id="userInputDisplay" style="display: none;">
+                    <p id="userInputText"></p>
+                </div>
+
+                <!-- Response Card -->
+                <div class="response-card" id="responseCard" style="display: none;">
+                    <div class="response-content" id="responseContent"></div>
+                </div>
+            </div>
+
+            <!-- Central Content Area with Orb (Background) -->
+            <div class="central-content">
+                <!-- Default Welcome -->
+                <div class="welcome-display" id="welcomeDisplay">
+                    <p class="welcome-text">Hey Orion, what's the weather like in New York?</p>
+                </div>
+
+                <!-- ✅ ORB FROM UIVERSE.IO - Positioned in the center -->
+                <div class="orb-container" id="orbContainer">
+                    <div class="orb">
+                        <div class="orb-inner"></div>
+                        <div class="orb-inner"></div>
+                    </div>
+                    <div class="status-text-inner" id="statusText">Waiting...</div>
+                </div>
+            </div>
+
+            <!-- Old Status Text removed -->
+
+            <!-- Control Bar -->
+            <div class="control-bar">
+                <button class="control-btn" id="settingsBtn" title="Settings">
+                    <i class="fa-solid fa-gear fa-lg"></i>
+                </button>
+
+                <button class="mic-btn" id="micBtn" title="Ask Orion">
+                    <i class="fa fa-microphone"></i>
+                </button>
+
+                <button class="control-btn" id="keyboardBtn" title="Type to Orion">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                        <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Hidden Input Field -->
+            <div class="input-container" id="inputContainer" style="display: none;">
+                <input type="text" id="textInput" placeholder="Type your command..." />
+                <button id="sendBtn">Send</button>
+            </div>
+
+            <!-- Pending Action Button (for opening URLs) -->
+            <div class="pending-action-container" id="pendingActionContainer" style="display: none;">
+                <button class="pending-action-btn" id="pendingActionBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    <span id="pendingActionText">Open</span>
+                </button>
+            </div>
+
+            <!-- Ask New Question Button (shown when response is displayed) -->
+            <div class="new-question-btn-container" id="newQuestionBtnContainer" style="display: none;">
+                <button class="new-question-btn" id="newQuestionBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Ask New Question
+                </button>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="settings-modal" id="settingsModal" style="display: none;">
+            <div class="settings-content">
+                <div class="settings-header">
+                    <h2>⚙️ Orion Settings</h2>
+                    <button class="close-btn" id="closeSettings">×</button>
+                </div>
+
+                <div class="settings-body">
+                    <div class="setting-group">
+                        <h3>🎤 Voice Settings</h3>
+                        <div class="setting-item">
+                            <label for="voiceRate">Speech Rate:</label>
+                            <input type="range" id="voiceRate" min="0.5" max="2" step="0.1" value="0.95" />
+                            <span id="voiceRateValue">0.95x</span>
+                        </div>
+                        <div class="setting-item">
+                            <label for="voicePitch">Voice Pitch:</label>
+                            <input type="range" id="voicePitch" min="0.5" max="2" step="0.1" value="1.0" />
+                            <span id="voicePitchValue">1.0x</span>
+                        </div>
+                        <div class="setting-item">
+                            <label for="voiceVolume">Volume:</label>
+                            <input type="range" id="voiceVolume" min="0" max="1" step="0.1" value="1.0" />
+                            <span id="voiceVolumeValue">100%</span>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>🎨 Animation Settings</h3>
+                        <div class="setting-item">
+                            <label for="animationSpeed">Animation Speed:</label>
+                            <input type="range" id="animationSpeed" min="0.5" max="3" step="0.1" value="1" />
+                            <span id="animationSpeedValue">1x</span>
+                        </div>
+                        <div class="setting-item checkbox-item">
+                            <input type="checkbox" id="enableParticles" checked />
+                            <label for="enableParticles">Enable Particle Effects</label>
+                        </div>
+                        <div class="setting-item checkbox-item">
+                            <input type="checkbox" id="enableGlow" checked />
+                            <label for="enableGlow">Enable Glow Effects</label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>🔧 General Settings</h3>
+                        <div class="setting-item checkbox-item">
+                            <input type="checkbox" id="autoSpeak" checked />
+                            <label for="autoSpeak">Auto-speak Responses</label>
+                        </div>
+                        <div class="setting-item checkbox-item">
+                            <input type="checkbox" id="showTimestamp" checked />
+                            <label for="showTimestamp">Show Timestamps</label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="themeColor">Accent Color:</label>
+                            <select id="themeColor">
+                                <option value="cyan">Cyan (Default)</option>
+                                <option value="purple">Purple</option>
+                                <option value="green">Green</option>
+                                <option value="orange">Orange</option>
+                                <option value="pink">Pink</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-footer">
+                    <button class="reset-btn" id="resetSettings">Reset to Default</button>
+                    <button class="save-btn" id="saveSettings">Save Settings</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo">ORION</span>
+                    <span class="footer-tagline">Voice Assistant</span>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-credits">
+                    <p class="footer-text">
+                        Crafted with <span class="heart">❤️</span> by
+                        <span class="developer-name">Charan Kumar</span>
+                    </p>
+                    <div class="social-links">
+                        <a href="https://github.com/charan-kumar99" target="_blank" class="social-icon github"
+                            title="GitHub">
+                            <i class="fa-brands fa-github fa-lg"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/charan-kumar-9b20a8378" target="_blank"
+                            class="social-icon linkedin" title="LinkedIn">
+                            <i class="fa-brands fa-linkedin fa-lg"></i>
+                        </a>
+                        <a href="https://www.instagram.com/chanu_xd/" target="_blank" class="social-icon instagram"
+                            title="Instagram">
+                            <i class="fa-brands fa-instagram fa-lg"></i>
+                        </a>
+                        <a href="mailto:charansuvarna99@gmail.com" class="social-icon email" title="Email">
+                            <i class="fa-solid fa-envelope fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="{{ url_for('static', filename='app.js') }}"></script>
+    </div>
+</body>
+
+</html>
